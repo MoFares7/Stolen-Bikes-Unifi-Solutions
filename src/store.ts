@@ -1,8 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { apiSlice } from "./core/apis/api";
+import viewModeReducer from "./shared/slices/viewSlice";
 
 const store = configureStore({
   reducer: {
+    viewMode: viewModeReducer,
     [apiSlice.reducerPath]: apiSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>

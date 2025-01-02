@@ -2,14 +2,12 @@ import { Box, IconButton, TextField } from "@mui/material";
 import React, { ChangeEvent } from "react";
 
 interface SearchFieldProps {
-  hintText: string;
   width?: string;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   value?: string;
 }
 
 const SearchField: React.FC<SearchFieldProps> = ({
-  hintText,
   onChange,
   width,
   value,
@@ -37,7 +35,7 @@ const SearchField: React.FC<SearchFieldProps> = ({
     >
       <TextField
         onChange={onChange}
-        placeholder={hintText}
+        placeholder={"Search"}
         value={value}
         sx={{
           width: "100%",
