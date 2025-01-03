@@ -1,5 +1,4 @@
 import { Box, Grid } from "@mui/material";
-import { SetStateAction } from "react";
 import notFoundImage from "../../../assets/images/notFoundImage.svg";
 import colors from "../../../assets/theme/colors";
 import EmptyCard from "../../../shared/components/Cards/EmptyCard";
