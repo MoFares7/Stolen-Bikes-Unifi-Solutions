@@ -11,4 +11,4 @@ const stolenBikesApis = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetAllBranchesLightQuery } = stolenBikesApis;
+export const { useGetAllStolenBikesQuery } = stolenBikesApis;

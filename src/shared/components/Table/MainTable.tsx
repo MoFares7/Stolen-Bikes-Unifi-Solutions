@@ -10,6 +10,7 @@ import { styled } from "@mui/material/styles";
 import React, { ReactNode, memo } from "react";
 import useTableLogic from "../../hooks/useTableLogic";
 import useTranslationDashboard from "../../hooks/useTranslationDashboard";
+import colors from "../../../assets/theme/colors";
 declare module "react" {
   function forwardRef<T, P = {}>(
     render: (props: P, ref: React.Ref<T>) => React.ReactNode | null
@@ -18,8 +19,8 @@ declare module "react" {
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: "info.light",
-    color: "text.primary",
+    backgroundColor: colors.stateColor,
+    color: colors.textColorBase,
     fontSize: theme.typography.subtitle1.fontSize,
     fontWeight: 500,
     lineHeight: theme.typography.subtitle1.lineHeight,
