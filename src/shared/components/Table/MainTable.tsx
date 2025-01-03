@@ -9,7 +9,6 @@ import TableSortLabel from "@mui/material/TableSortLabel";
 import { styled } from "@mui/material/styles";
 import React, { ReactNode, memo } from "react";
 import colors from "../../../assets/theme/colors";
-import useTableLogic from "../../hooks/useTableLogic";
 import useTranslationDashboard from "../../hooks/useTranslationDashboard";
 
 declare module "react" {
@@ -42,7 +41,6 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     overflow: "hidden",
     textOverflow: "ellipsis",
     position: "relative",
-    cursor: "pointer",
   },
 }));
 
@@ -84,17 +82,9 @@ interface MainTableProps<T extends { id: string }> {
 
 const MainTable = React.forwardRef(
   <T extends { id: string }>(
-    {
-      columns,
-      rows,
-      options,
-      isRowClick = true,
-      onSort,
-      isLoading = false,
-    }: MainTableProps<T>,
+    { columns, rows, options, onSort, isLoading = false }: MainTableProps<T>,
     ref: React.Ref<HTMLTableElement>
   ) => {
-    const { handleRowClick } = useTableLogic(rows);
     const { translate } = useTranslationDashboard();
     console.log("Received rows in MainTable:", rows);
 
@@ -154,7 +144,7 @@ const MainTable = React.forwardRef(
             {isLoading
               ? Array.from({ length: 5 }).map((_, index) => (
                   <StyledTableRow key={index}>
-                    {columns.map((column, cellIndex) => (
+                    {columns.map((_column, cellIndex) => (
                       <StyledTableCell key={cellIndex}>
                         <Shimmer />
                       </StyledTableCell>
@@ -162,10 +152,7 @@ const MainTable = React.forwardRef(
                   </StyledTableRow>
                 ))
               : rows.map((row) => (
-                  <StyledTableRow
-                    key={row.id}
-                    onClick={() => (isRowClick ? handleRowClick(row.id) : {})}
-                  >
+                  <StyledTableRow key={row.id}>
                     {columns.map((column) => (
                       <StyledTableCell
                         key={column.key as string}
