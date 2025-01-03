@@ -1,24 +1,37 @@
-// import { useState } from "react";
-// import { useGetAllStolenBikesQuery } from "../services/stolenBikes_api";
+import {
+  useGetAllStolenBikesQuery,
+  useGetCountStolenBikesQuery,
+} from "../services/stolenBikes_api";
 
-// const useStoleBikesApi = () => {
-//   const [page, setPage] = useState(1);
-//   const [perPage, setPerPage] = useState(10);
-//   const {
-//     data: stolenBikesData,
-//     isLoading: isGetStolenBikesDataLoading,
-//     isError: isGetStolenBikesDataError,
-//   } = useGetAllStolenBikesQuery({ page, per_page: perPage });
+const useStolenBikesAPI = (
+  pageNumber: number,
+  pageSize: number,
+  searchTerm: string
+) => {
+  const {
+    data: stolenBikesData,
+    isLoading: isGetStolenBikesDataLoading,
+    isFetching: isGetStolenBikesDataFetching,
+    isError: isGetStolenBikesDataError,
+    refetch: refetchStolenBikes,
+  } = useGetAllStolenBikesQuery({
+    page: pageNumber,
+    per_page: pageSize,
+    query: searchTerm,
+  });
 
-//   return {
-//     stolenBikesData,
-//     isGetStolenBikesDataLoading,
-//     isGetStolenBikesDataError,
-//     page,
-//     perPage,
-//     setPerPage,
-//     setPage,
-//   };
-// };
+  const { data: stolenBikesCount, isLoading: isGetStolenBikesCountLoading } =
+    useGetCountStolenBikesQuery({});
 
-// export default useStoleBikesApi;
+  return {
+    stolenBikesData,
+    stolenBikesCount,
+    isGetStolenBikesDataLoading,
+    isGetStolenBikesDataFetching,
+    isGetStolenBikesDataError,
+    isGetStolenBikesCountLoading,
+    refetchStolenBikes,
+  };
+};
+
+export default useStolenBikesAPI;

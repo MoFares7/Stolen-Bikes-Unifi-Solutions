@@ -29,6 +29,7 @@ const MainCard: React.FC<MainCardProps> = ({
         textAlign: "center",
         my: 3,
         px: 2,
+        mx: "auto",
         border: `1px solid`,
         borderColor: colors.secondaryColor,
         position: "relative",

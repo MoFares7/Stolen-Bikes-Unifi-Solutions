@@ -96,6 +96,7 @@ const MainTable = React.forwardRef(
   ) => {
     const { handleRowClick } = useTableLogic(rows);
     const { translate } = useTranslationDashboard();
+    console.log("Received rows in MainTable:", rows);
 
     return (
       <TableContainer

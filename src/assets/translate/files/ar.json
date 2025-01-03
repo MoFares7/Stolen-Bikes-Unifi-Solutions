@@ -1,1 +1,18 @@
-{}
+{
+  "pages": {
+    "stolenBikes": {
+      "search": "بحث",
+      "title": "العنوان",
+      "description": "الوصف",
+      "image": "الصورة",
+      "DateOfTheTheft": "تاريخ السرقة",
+      "Location": "الموقع",
+      "createdAt": "تاريخ الإنشاء",
+      "Filter": "تصفية",
+      "All Stolen Bikes": "جميع الدراجات المسروقة"
+    },
+    "Pagination": {
+      "result": "نتيجة"
+    }
+  }
+}

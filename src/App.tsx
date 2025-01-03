@@ -1,11 +1,14 @@
+import { BrowserRouter } from "react-router-dom";
 import "./assets/translate/i18next";
-import StolenBikesDisplay from "./feature/stolenBikes/pages/StolenBikesDisplay";
 import PagesLayot from "./layout/PagesLayot";
+import ManagementRoute from "./routes/route";
 
 const App = () => {
   return (
     <PagesLayot>
-      <StolenBikesDisplay />
+      <BrowserRouter>
+        <ManagementRoute />
+      </BrowserRouter>
     </PagesLayot>
   );
 };

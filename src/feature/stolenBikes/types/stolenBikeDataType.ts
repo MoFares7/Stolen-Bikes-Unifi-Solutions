@@ -1,6 +1,8 @@
+import { Statuses } from "./statusType";
+
 export interface StolenBikeDataType {
   frame_model: string;
-  status: string;
+  status: Statuses;
   large_img: string;
   title: string;
   description: string;
