@@ -11,7 +11,7 @@ import SearchField from "../../../shared/components/Inputs/SearchField";
 import { useAppDispatch } from "../../../shared/hooks/useSelectors";
 import { changeMode } from "../../../shared/slices/viewSlice";
 import useStolenBikesData from "../hooks/useStolenBikesData";
-import { DateRange } from "../hooks/useDateRange";
+import { DateRange } from "../types/dateRangeType";
 
 interface HeaderStolenBikesProps {
   onSearch?: (event: ChangeEvent<HTMLInputElement>) => void;

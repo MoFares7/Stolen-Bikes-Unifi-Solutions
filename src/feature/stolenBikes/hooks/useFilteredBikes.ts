@@ -1,6 +1,6 @@
 import { useMemo } from "react";
-import { DateRange } from "./useDateRange";
 import { Bike } from "../types/bikes";
+import { DateRange } from "../types/dateRangeType";
 
 const useFilteredBikes = (bikes: Bike[], dateRange: DateRange) => {
   return useMemo(() => {

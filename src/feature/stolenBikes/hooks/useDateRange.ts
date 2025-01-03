@@ -1,9 +1,5 @@
 import { useState } from "react";
-
-export interface DateRange {
-  startDate: Date | null;
-  endDate: Date | null;
-}
+import { DateRange } from "../types/dateRangeType";
 
 const useDateRange = () => {
   const [dateRange, setDateRange] = useState<DateRange>({

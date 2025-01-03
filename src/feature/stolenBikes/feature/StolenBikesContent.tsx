@@ -8,11 +8,7 @@ import Footer from "../../../shared/components/Footer/Footer";
 import MainTable from "../../../shared/components/Table/MainTable";
 import HeaderStolenBikes from "../components/HeaderStolenBikes";
 import useStolenBikesData from "../hooks/useStolenBikesData";
-
-interface DateRange {
-  startDate: Date | null;
-  endDate: Date | null;
-}
+import { DateRange } from "../types/dateRangeType";
 
 const StolenBikesContent: React.FC = () => {
   const {
