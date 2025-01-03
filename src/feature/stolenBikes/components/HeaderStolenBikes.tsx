@@ -1,30 +1,31 @@
-import {
-  FilterListOutlined,
-  ViewAgendaOutlined,
-  WindowOutlined,
-} from "@mui/icons-material";
-import { Box, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import React, { ChangeEvent } from "react";
+import grid from "../../../assets/icons/grid.svg";
+import layout from "../../../assets/icons/layout.svg";
 import { borders } from "../../../assets/theme/borders";
 import colors from "../../../assets/theme/colors";
 import { fonts } from "../../../assets/theme/fonts";
 import PrimaryButton from "../../../shared/components/Buttons/PrimaryButton";
+import DateRangePickerWithCalendars from "../../../shared/components/DateSelect/DateRangeSelect";
 import SearchField from "../../../shared/components/Inputs/SearchField";
-import {
-  useAppDispatch,
-  useAppSelector,
-} from "../../../shared/hooks/useSelectors";
+import { useAppDispatch } from "../../../shared/hooks/useSelectors";
 import { changeMode } from "../../../shared/slices/viewSlice";
-import grid from "../../../assets/icons/grid.svg";
-import layout from "../../../assets/icons/layout.svg";
+import useStolenBikesData from "../hooks/useStolenBikesData";
+import { DateRange } from "../hooks/useDateRange";
 
 interface HeaderStolenBikesProps {
   onSearch?: (event: ChangeEvent<HTMLInputElement>) => void;
+  onFilter?: (range: DateRange) => void;
+  numberOfStolen?: number;
 }
 
-const HeaderStolenBikes: React.FC<HeaderStolenBikesProps> = ({ onSearch }) => {
+const HeaderStolenBikes: React.FC<HeaderStolenBikesProps> = ({
+  onSearch,
+  onFilter,
+  numberOfStolen,
+}) => {
   const dispatch = useAppDispatch();
-  const viewMode = useAppSelector((state) => state.viewMode.viewMode);
+  const { viewMode } = useStolenBikesData();
 
   const renderViewButtons = () => (
     <Box
@@ -42,7 +43,7 @@ const HeaderStolenBikes: React.FC<HeaderStolenBikesProps> = ({ onSearch }) => {
         icon={<img src={layout} />}
         borderRadius={borders.borderRadius.sm}
         backgroundColor={
-          viewMode === "table" ? colors.secondaryColor : colors.backgroundColor
+          viewMode === "table" ? colors.stateColor : colors.backgroundColor
         }
         onClick={() => dispatch(changeMode("table"))}
       />
@@ -51,7 +52,7 @@ const HeaderStolenBikes: React.FC<HeaderStolenBikesProps> = ({ onSearch }) => {
         icon={<img src={grid} />}
         borderRadius={borders.borderRadius.sm}
         backgroundColor={
-          viewMode === "grid" ? colors.secondaryColor : colors.backgroundColor
+          viewMode === "grid" ? colors.stateColor : colors.backgroundColor
         }
         onClick={() => dispatch(changeMode("grid"))}
       />
@@ -61,7 +62,6 @@ const HeaderStolenBikes: React.FC<HeaderStolenBikesProps> = ({ onSearch }) => {
   return (
     <Box
       sx={{
-        // pb: 3,
         display: { xs: "block", md: "flex" },
         mt: { xs: "10px", lg: "0px" },
         justifyContent: "space-between",
@@ -71,36 +71,33 @@ const HeaderStolenBikes: React.FC<HeaderStolenBikesProps> = ({ onSearch }) => {
     >
       <Box
         sx={{
-          display: "flex",
+          display: { xs: "block", sm: "flex" },
+          mt: { xs: "10px", lg: "0px" },
           justifyContent: "start",
           alignItems: "center",
-          width: "70%",
+          width: { xs: "100%", md: "70%" },
           gap: "16px",
         }}
       >
         <SearchField onChange={onSearch} />
-        <PrimaryButton
-          isTitleAndIcon={true}
-          icon={<FilterListOutlined />}
-          title="Filter"
-          borderRadius={borders.borderRadius.sm}
-          backgroundColor={colors.primaryColor}
-          colorTitle={colors.backgroundColorSecondary}
-          hoverColor={colors.hoverColor}
-        />
-        <Box
-          sx={{
-            //   dispaly: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            mt: { xs: "10px", md: "0px" },
-            justifySelf: "flex-end",
-          }}
+        <Stack
+          direction={"row"}
+          justifyContent={"space-around"}
+          pt={"8px"}
+          gap={"8px"}
         >
+          <DateRangePickerWithCalendars onChange={onFilter} />
           {renderViewButtons()}
-        </Box>
+        </Stack>
       </Box>
-      <Box sx={{ display: "flex", justifyContent: "end" }}>
+      <Stack
+        sx={{
+          display: {
+            xs: "none",
+            md: "flex",
+          },
+        }}
+      >
         <Typography
           sx={{
             typography: fonts.h6,
@@ -108,9 +105,10 @@ const HeaderStolenBikes: React.FC<HeaderStolenBikesProps> = ({ onSearch }) => {
             color: colors.textColorBase,
           }}
         >
-          All Stolen Bikes 44
+          All Stolen Bikes{" "}
+          <span style={{ color: colors.primaryColor }}>{numberOfStolen}</span>
         </Typography>
-      </Box>
+      </Stack>
     </Box>
   );
 };

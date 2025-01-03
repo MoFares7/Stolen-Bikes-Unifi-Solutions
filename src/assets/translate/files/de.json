@@ -1,0 +1,18 @@
+{
+  "pages": {
+    "stolenBikes": {
+      "search": "Suche",
+      "title": "TITEL",
+      "description": "BESCHREIBUNG",
+      "image": "BILD",
+      "DateOfTheTheft": "DIEBSTAHL-DATUM",
+      "Location": "ORT",
+      "createdAt": "ERSTELLT AM",
+      "Filter": "Filter",
+      "All Stolen Bikes": "Alle gestohlenen Fahrräder"
+    },
+    "Pagination": {
+      "result": "Ergebnis"
+    }
+  }
+}

@@ -26,13 +26,13 @@ const SearchField: React.FC<SearchFieldProps> = ({
         overflow: "hidden",
         transition: ".5s",
         "&:hover .MuiFormControl-root": {
-          borderColor: "text.primary",
+          borderColor: colors.primaryColor,
           transition: ".5s",
-          borderRadius: "100px",
+          borderRadius: "8px",
         },
         "&:hover .circle": {
           transition: ".5s",
-          borderLeftColor: "text.primary",
+          borderLeftColor: colors.primaryColor,
         },
       }}
     >
@@ -43,7 +43,7 @@ const SearchField: React.FC<SearchFieldProps> = ({
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <SearchOutlined />
+              <SearchOutlined style={{ color: colors.secondaryColor }} />
             </InputAdornment>
           ),
         }}

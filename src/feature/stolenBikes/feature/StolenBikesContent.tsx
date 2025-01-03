@@ -1,24 +1,41 @@
-import { Box, Grid, Grid2 } from "@mui/material";
-import MainTable from "../../../shared/components/Table/MainTable";
-import useStolenBikesData from "../hooks/useStolenBikesData";
-import HeaderStolenBikes from "./HeaderStolenBikes";
-import colors from "../../../assets/theme/colors";
-import MainCard from "../../../shared/components/Cards/MainCard";
+import { Box, Grid } from "@mui/material";
+import { SetStateAction } from "react";
 import notFoundImage from "../../../assets/images/notFoundImage.svg";
-import { StolenBikeDataType } from "../types/stolenBikeDataType";
+import colors from "../../../assets/theme/colors";
+import EmptyCard from "../../../shared/components/Cards/EmptyCard";
+import ErrorCard from "../../../shared/components/Cards/ErrorCard";
+import MainCard from "../../../shared/components/Cards/MainCard";
+import Footer from "../../../shared/components/Footer/Footer";
+import MainTable from "../../../shared/components/Table/MainTable";
+import HeaderStolenBikes from "../components/HeaderStolenBikes";
+import useStolenBikesData from "../hooks/useStolenBikesData";
 
-const StolenBikesContent = () => {
+interface DateRange {
+  startDate: Date | null;
+  endDate: Date | null;
+}
+
+const StolenBikesContent: React.FC = () => {
   const {
-    ROWS,
-    COLUMNS,
-    isGetStolenBikesDataLoading,
+    rows,
+    columns,
     viewMode,
+    isGetStolenBikesDataLoading,
+    isGetStolenBikesDataFetching,
     isGetStolenBikesDataError,
+    pageCount,
+    totalResults,
+    pageSize,
+    pageNumber,
+    handlePageChange,
+    handlePageSizeChange,
+    handleSearch,
+    isGetStolenBikesCountLoading,
+    searchTerm,
+    refetchStolenBikes,
+    setDateRange,
   } = useStolenBikesData();
 
-  if (isGetStolenBikesDataLoading) {
-    return <h1>Loading</h1>;
-  }
   return (
     <Box
       sx={{
@@ -34,15 +51,49 @@ const StolenBikesContent = () => {
         gap: 2,
       }}
     >
-      <HeaderStolenBikes />
-      {viewMode === "table" ? (
-        <MainTable columns={COLUMNS} rows={ROWS} />
+      <HeaderStolenBikes
+        onSearch={handleSearch}
+        onFilter={(range: DateRange) => setDateRange(range)}
+        numberOfStolen={
+          isGetStolenBikesCountLoading ? "Loading..." : totalResults
+        }
+      />
+      {isGetStolenBikesDataError ? (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100%",
+          }}
+        >
+          <ErrorCard handleRefresh={refetchStolenBikes} />
+        </Box>
+      ) : rows.length === 0 && searchTerm ? (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100%",
+          }}
+        >
+          <EmptyCard />
+        </Box>
+      ) : viewMode === "table" ? (
+        <MainTable
+          columns={columns}
+          rows={rows}
+          isLoading={
+            isGetStolenBikesDataLoading || isGetStolenBikesDataFetching
+          }
+        />
       ) : (
         <Grid container spacing={2}>
-          {ROWS.map((stolen) => (
-            <Grid item xs={12} sm={4} md={6} lg={2.4}>
+          {rows.map((stolen) => (
+            <Grid item xs={12} sm={6} md={4} lg={2.4} key={stolen.id}>
               <MainCard
-                image={stolen.large_img ? stolen.large_img : notFoundImage}
+                image={stolen.large_img || notFoundImage}
                 title={stolen.title}
                 subTitle={stolen.frame_model}
                 status={stolen.status || "Unknown"}
@@ -51,6 +102,14 @@ const StolenBikesContent = () => {
           ))}
         </Grid>
       )}
+      <Footer
+        pageNumber={pageNumber}
+        pageSize={pageSize}
+        totalResults={totalResults}
+        onPageChange={handlePageChange}
+        onPageSizeChange={handlePageSizeChange}
+        pageCount={pageCount}
+      />
     </Box>
   );
 };
