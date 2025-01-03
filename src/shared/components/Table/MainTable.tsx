@@ -53,7 +53,7 @@ const StyledTableRow = styled(TableRow)(() => ({
 const Shimmer = styled(Box)(({ theme }) => ({
   height: theme.typography.subtitle1.fontSize,
   width: "100%",
-  background: `linear-gradient(90deg, ${colors.stateColor} 25%, ${colors.stateColor} 50%, ${colors.stateColor} 75%)`,
+  background: `linear-gradient(90deg, ${colors.stateColor} 25%, ${colors.secondaryColor} 50%, ${colors.stateColor} 75%)`,
   backgroundSize: "200% 100%",
   animation: "shimmer 1.5s infinite",
   "@keyframes shimmer": {

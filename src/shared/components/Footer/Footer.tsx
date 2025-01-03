@@ -10,6 +10,7 @@ import { borders } from "../../../assets/theme/borders";
 import { fonts } from "../../../assets/theme/fonts";
 import MainDropDownField from "../DropDown/MainDropDown";
 import colors from "../../../assets/theme/colors";
+import useTranslationDashboard from "../../hooks/useTranslationDashboard";
 
 const Footer: React.FC<{
   pageNumber: number;
@@ -29,7 +30,7 @@ const Footer: React.FC<{
   onPageSizeChange,
   pageCount,
 }) => {
-  console.log("pageCount: ", pageCount);
+  const { translate } = useTranslationDashboard();
   return (
     <Box
       sx={{
@@ -72,7 +73,7 @@ const Footer: React.FC<{
               color: "text.secondary",
             }}
           >
-            Results:
+            {translate("pages.Pagination.result")}:
           </Typography>
           <Typography
             sx={{
@@ -84,7 +85,7 @@ const Footer: React.FC<{
             {`${(pageNumber - 1) * pageSize + 1} - ${Math.min(
               pageNumber * pageSize,
               totalResults
-            )} of ${totalResults}`}
+            )} ${translate("pages.Pagination.of")} ${totalResults}`}
           </Typography>
         </Stack>
       </Box>

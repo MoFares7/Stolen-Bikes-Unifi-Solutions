@@ -1,4 +1,4 @@
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, Stack } from "@mui/material";
 import notFoundImage from "../../../assets/images/notFoundImage.svg";
 import colors from "../../../assets/theme/colors";
 import EmptyCard from "../../../shared/components/Cards/EmptyCard";
@@ -9,6 +9,7 @@ import MainTable from "../../../shared/components/Table/MainTable";
 import HeaderStolenBikes from "../components/HeaderStolenBikes";
 import useStolenBikesData from "../hooks/useStolenBikesData";
 import { DateRange } from "../types/dateRangeType";
+import LoaderCard from "../../../shared/components/Cards/LoaderCard";
 
 const StolenBikesContent: React.FC = () => {
   const {
@@ -85,16 +86,22 @@ const StolenBikesContent: React.FC = () => {
         />
       ) : (
         <Grid container spacing={2}>
-          {rows.map((stolen) => (
-            <Grid item xs={12} sm={6} md={4} lg={2.4} key={stolen.id}>
-              <MainCard
-                image={stolen.large_img || notFoundImage}
-                title={stolen.title}
-                subTitle={stolen.frame_model}
-                status={stolen.status || "Unknown"}
-              />
-            </Grid>
-          ))}
+          {isGetStolenBikesCountLoading || isGetStolenBikesDataFetching ? (
+            <Stack justifyContent={"center"} height={"70vh"} mx={"auto"}>
+              <LoaderCard />
+            </Stack>
+          ) : (
+            rows.map((stolen) => (
+              <Grid item xs={12} sm={6} md={4} lg={2.4}>
+                <MainCard
+                  image={stolen.large_img || notFoundImage}
+                  title={stolen.title}
+                  subTitle={stolen.frame_model}
+                  status={stolen.status || "Unknown"}
+                />
+              </Grid>
+            ))
+          )}
         </Grid>
       )}
       <Footer

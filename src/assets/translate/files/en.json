@@ -1,7 +1,7 @@
 {
   "pages": {
     "stolenBikes": {
-      "search":"search",
+      "search": "search",
       "title": "TITLE",
       "description": "DESCRIPTION",
       "image": "IMAGE",
@@ -9,10 +9,15 @@
       "Location": "LOCATION",
       "createdAt": "CREATED AT",
       "Filter": "Filter",
-      "All Stolen Bikes":"All Stolen Bikes"
+      "All Stolen Bikes": "All Stolen Bikes"
     },
-    "Pagination":{
-      "result":"Result"
+    "Pagination": {
+      "result": "Result",
+      "of": "Of"
     }
-  }
+  },
+  "startDate": "Start Date",
+  "endDate": "End Date",
+  "OK": "OK",
+  "Cancel": "Cancel"
 }

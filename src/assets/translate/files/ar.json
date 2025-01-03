@@ -8,11 +8,16 @@
       "DateOfTheTheft": "تاريخ السرقة",
       "Location": "الموقع",
       "createdAt": "تاريخ الإنشاء",
-      "Filter": "تصفية",
+      "Filter": "الفلترة",
       "All Stolen Bikes": "جميع الدراجات المسروقة"
     },
     "Pagination": {
-      "result": "نتيجة"
+      "result": "نتيجة",
+      "of": "من"
     }
-  }
+  },
+  "startDate": "تاريخ البداية",
+  "endDate": "تاريخ النهاية",
+  "OK": "تطبيق",
+  "Cancel": "إلغاء"
 }

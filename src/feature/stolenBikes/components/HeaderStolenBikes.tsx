@@ -7,11 +7,15 @@ import colors from "../../../assets/theme/colors";
 import { fonts } from "../../../assets/theme/fonts";
 import PrimaryButton from "../../../shared/components/Buttons/PrimaryButton";
 import DateRangePickerWithCalendars from "../../../shared/components/DateSelect/DateRangeSelect";
+import MainDropDownField from "../../../shared/components/DropDown/MainDropDown";
 import SearchField from "../../../shared/components/Inputs/SearchField";
 import { useAppDispatch } from "../../../shared/hooks/useSelectors";
+import useTranslationDashboard from "../../../shared/hooks/useTranslationDashboard";
 import { changeMode } from "../../../shared/slices/viewSlice";
 import useStolenBikesData from "../hooks/useStolenBikesData";
 import { DateRange } from "../types/dateRangeType";
+import useLanguages from "./../../../shared/hooks/useLanguages";
+import i18n from "../../../assets/translate/i18next";
 
 interface HeaderStolenBikesProps {
   onSearch?: (event: ChangeEvent<HTMLInputElement>) => void;
@@ -26,6 +30,8 @@ const HeaderStolenBikes: React.FC<HeaderStolenBikesProps> = ({
 }) => {
   const dispatch = useAppDispatch();
   const { viewMode } = useStolenBikesData();
+  const { languageOptions, handleLanguageChange } = useLanguages();
+  const { translate } = useTranslationDashboard();
 
   const renderViewButtons = () => (
     <Box
@@ -80,12 +86,15 @@ const HeaderStolenBikes: React.FC<HeaderStolenBikesProps> = ({
         }}
       >
         <SearchField onChange={onSearch} />
-        <Stack
-          direction={"row"}
-          justifyContent={"space-around"}
-          pt={"8px"}
-          gap={"8px"}
-        >
+
+        <MainDropDownField
+          width={{ xs: "100%", md: "10%" }} 
+          defaultValue={i18n.language}
+          options={languageOptions}
+          onChange={handleLanguageChange}
+        />
+
+        <Stack direction={"row"} justifyContent={"space-around"} gap={"8px"}>
           <DateRangePickerWithCalendars onChange={onFilter} />
           {renderViewButtons()}
         </Stack>
@@ -105,7 +114,7 @@ const HeaderStolenBikes: React.FC<HeaderStolenBikesProps> = ({
             color: colors.textColorBase,
           }}
         >
-          All Stolen Bikes{" "}
+          {translate("pages.stolenBikes.All Stolen Bikes")}{" "}
           <span style={{ color: colors.primaryColor }}>{numberOfStolen}</span>
         </Typography>
       </Stack>

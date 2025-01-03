@@ -2,13 +2,11 @@ import {
   MenuItem,
   Select,
   SelectChangeEvent,
-  Stack,
-  Typography,
+  Typography
 } from "@mui/material";
 import { ReactNode } from "react";
 import { borders } from "../../../assets/theme/borders";
 import colors from "../../../assets/theme/colors";
-import { fonts } from "../../../assets/theme/fonts";
 
 interface MainDropDownFieldProps {
   height?: string;
@@ -20,7 +18,6 @@ interface MainDropDownFieldProps {
     event: SelectChangeEvent<string | number>,
     child: ReactNode
   ) => void;
-  label?: string;
   autoComplete?: string;
   type?: string;
   error?: boolean;
@@ -30,7 +27,6 @@ interface MainDropDownFieldProps {
   width?: string | { xs?: string; md?: string; xl?: string };
   backgroundColor?: string;
   icon?: React.ReactNode;
-  isRequired?: boolean;
   disabled?: boolean;
   isBordered?: boolean;
   isLoading?: boolean;
@@ -44,7 +40,6 @@ const MainDropDownField: React.FC<MainDropDownFieldProps> = ({
   disabled = false,
   value,
   onChange,
-  label,
   autoComplete,
   type,
   error,
@@ -53,7 +48,6 @@ const MainDropDownField: React.FC<MainDropDownFieldProps> = ({
   width,
   backgroundColor,
   defaultValue,
-  isRequired,
   isBordered = true,
   isLoading,
   my,
@@ -62,28 +56,6 @@ const MainDropDownField: React.FC<MainDropDownFieldProps> = ({
     typeof width === "object" ? width : { xs: width, md: width, xl: width };
 
   return (
-    <Stack direction={"column"} width={"100%"} justifyContent={"end"}>
-      {label && (
-        <Typography
-          sx={{
-            typography: fonts.subtitle1,
-            fontWeight: 400,
-            color: "text.secondary",
-          }}
-        >
-          {label}
-          {isRequired && (
-            <span
-              style={{
-                color: "red",
-                margin: "8px",
-              }}
-            >
-              *
-            </span>
-          )}
-        </Typography>
-      )}
       <Select
         required
         fullWidth={isFullWidth}
@@ -95,6 +67,7 @@ const MainDropDownField: React.FC<MainDropDownFieldProps> = ({
         onChange={onChange}
         error={error}
         sx={{
+          borderRadius: borders.borderRadius.sm,
           my: my || "16px",
           margin: margin,
           height: height || "47px",
@@ -103,7 +76,6 @@ const MainDropDownField: React.FC<MainDropDownFieldProps> = ({
           borderColor: colors.stateColor,
           width: isFulWidth ? "100%" : responsiveWidth,
           "& .MuiOutlinedInput-root": {
-            borderRadius: borders.borderRadius.sm,
             "& .MuiOutlinedInput-notchedOutline": {
               borderColor: error ? "red" : "secondary.light",
             },
@@ -149,7 +121,6 @@ const MainDropDownField: React.FC<MainDropDownFieldProps> = ({
           ))
         )}
       </Select>
-    </Stack>
   );
 };
 

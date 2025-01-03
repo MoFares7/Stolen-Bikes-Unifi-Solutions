@@ -3,6 +3,7 @@ import { Box, InputAdornment, TextField } from "@mui/material";
 import React, { ChangeEvent } from "react";
 import { borders } from "../../../assets/theme/borders";
 import colors from "../../../assets/theme/colors";
+import useTranslationDashboard from "../../hooks/useTranslationDashboard";
 
 interface SearchFieldProps {
   width?: string;
@@ -15,6 +16,7 @@ const SearchField: React.FC<SearchFieldProps> = ({
   width,
   value,
 }) => {
+  const { translate } = useTranslationDashboard();
   return (
     <Box
       sx={{
@@ -38,7 +40,7 @@ const SearchField: React.FC<SearchFieldProps> = ({
     >
       <TextField
         onChange={onChange}
-        placeholder={"Search"}
+        placeholder={translate("pages.stolenBikes.search")}
         value={value}
         InputProps={{
           startAdornment: (

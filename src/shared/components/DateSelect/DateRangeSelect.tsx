@@ -8,13 +8,14 @@ import { useState } from "react";
 import { borders } from "../../../assets/theme/borders";
 import colors from "../../../assets/theme/colors";
 import PrimaryButton from "../Buttons/PrimaryButton";
+import useTranslationDashboard from "../../hooks/useTranslationDashboard";
 
 function DateRangePickerWithCalendars(props: { onChange: any }) {
   const { onChange } = props;
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState(null);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-
+  const { translate } = useTranslationDashboard();
   const handleOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -38,7 +39,7 @@ function DateRangePickerWithCalendars(props: { onChange: any }) {
       <PrimaryButton
         isTitleAndIcon={true}
         icon={<FilterListOutlined />}
-        title="Filter"
+        title={translate("pages.stolenBikes.Filter")}
         fontSize={"16px"}
         fontType="subtitle1"
         fontWeight={500}
@@ -60,7 +61,9 @@ function DateRangePickerWithCalendars(props: { onChange: any }) {
       >
         <Box display="flex" flexDirection="column" padding={2} gap={4}>
           <Box>
-            <Typography variant="subtitle1">Start Date</Typography>
+            <Typography variant="subtitle1">
+              {translate("startDate")}
+            </Typography>
             <DateCalendar
               value={startDate}
               onChange={(newDate) => {
@@ -73,7 +76,7 @@ function DateRangePickerWithCalendars(props: { onChange: any }) {
           </Box>
 
           <Box>
-            <Typography variant="subtitle1">End Date</Typography>
+            <Typography variant="subtitle1">{translate("endDate")}</Typography>
             <DateCalendar
               value={endDate}
               minDate={startDate}
@@ -83,7 +86,14 @@ function DateRangePickerWithCalendars(props: { onChange: any }) {
 
           <Box textAlign="right" mt={2}>
             <Button variant="contained" onClick={handleSave}>
-              OK
+              {translate("OK")}
+            </Button>
+            <Button
+              variant="contained"
+              onClick={handleClose}
+              sx={{ backgroundColor: colors.errorColor, mx: "8px" }}
+            >
+              {translate("Cancel")}
             </Button>
           </Box>
         </Box>
