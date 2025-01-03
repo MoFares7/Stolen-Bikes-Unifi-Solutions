@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-export const BASE_URL = "https://bikeindex.org/api";
+export const BASE_URL = "http://bikeindex.org";
 
 export const apiSlice = createApi({
   baseQuery: fetchBaseQuery({

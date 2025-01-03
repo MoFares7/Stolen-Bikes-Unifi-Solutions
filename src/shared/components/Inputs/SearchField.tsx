@@ -1,5 +1,8 @@
-import { Box, IconButton, TextField } from "@mui/material";
+import { SearchOutlined } from "@mui/icons-material";
+import { Box, InputAdornment, TextField } from "@mui/material";
 import React, { ChangeEvent } from "react";
+import { borders } from "../../../assets/theme/borders";
+import colors from "../../../assets/theme/colors";
 
 interface SearchFieldProps {
   width?: string;
@@ -37,10 +40,17 @@ const SearchField: React.FC<SearchFieldProps> = ({
         onChange={onChange}
         placeholder={"Search"}
         value={value}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchOutlined />
+            </InputAdornment>
+          ),
+        }}
         sx={{
           width: "100%",
-          borderRadius: "100px",
-          borderColor: "secondary.light",
+          borderRadius: borders.borderRadius.sm,
+          borderColor: colors.secondaryColor,
           borderStyle: "solid",
           borderWidth: "1px",
           outline: "none",
@@ -56,35 +66,6 @@ const SearchField: React.FC<SearchFieldProps> = ({
           },
         }}
       />
-      <Box
-        className="circle"
-        sx={{
-          backgroundColor: "background.paper",
-          p: "10px",
-          position: "absolute",
-          right: "-10px",
-          borderLeftWidth: "3px",
-          borderLeftColor: "secondary.light",
-          borderLeftStyle: "solid",
-          borderWidth: "1px",
-          borderRadius: "100%",
-          // "&:hover ~ .MuiFormControl-root": {
-          //   borderColor: isDarkMode ? "info.light" : "secondary.main",
-          // },
-        }}
-      >
-        <IconButton
-          sx={{
-            "&:hover": { backgroundColor: "primary.main" },
-            backgroundColor: "primary.main",
-            width: "45px",
-            height: "45px",
-          }}
-          size="small"
-        >
-          {/* <IconSearch color="white" size={22} /> */}
-        </IconButton>
-      </Box>
     </Box>
   );
 };
