@@ -1,10 +1,8 @@
-import {
-  FilterListOutlined,
-  ViewAgendaOutlined,
-  WindowOutlined,
-} from "@mui/icons-material";
+import { FilterListOutlined } from "@mui/icons-material";
 import { Box, Typography } from "@mui/material";
 import React, { ChangeEvent } from "react";
+import grid from "../../../assets/icons/grid.svg";
+import layout from "../../../assets/icons/layout.svg";
 import { borders } from "../../../assets/theme/borders";
 import colors from "../../../assets/theme/colors";
 import { fonts } from "../../../assets/theme/fonts";
@@ -15,14 +13,16 @@ import {
   useAppSelector,
 } from "../../../shared/hooks/useSelectors";
 import { changeMode } from "../../../shared/slices/viewSlice";
-import grid from "../../../assets/icons/grid.svg";
-import layout from "../../../assets/icons/layout.svg";
 
 interface HeaderStolenBikesProps {
   onSearch?: (event: ChangeEvent<HTMLInputElement>) => void;
+  numberOfStolen: number;
 }
 
-const HeaderStolenBikes: React.FC<HeaderStolenBikesProps> = ({ onSearch }) => {
+const HeaderStolenBikes: React.FC<HeaderStolenBikesProps> = ({
+  onSearch,
+  numberOfStolen,
+}) => {
   const dispatch = useAppDispatch();
   const viewMode = useAppSelector((state) => state.viewMode.viewMode);
 
@@ -42,7 +42,7 @@ const HeaderStolenBikes: React.FC<HeaderStolenBikesProps> = ({ onSearch }) => {
         icon={<img src={layout} />}
         borderRadius={borders.borderRadius.sm}
         backgroundColor={
-          viewMode === "table" ? colors.secondaryColor : colors.backgroundColor
+          viewMode === "table" ? colors.stateColor : colors.backgroundColor
         }
         onClick={() => dispatch(changeMode("table"))}
       />
@@ -51,7 +51,7 @@ const HeaderStolenBikes: React.FC<HeaderStolenBikesProps> = ({ onSearch }) => {
         icon={<img src={grid} />}
         borderRadius={borders.borderRadius.sm}
         backgroundColor={
-          viewMode === "grid" ? colors.secondaryColor : colors.backgroundColor
+          viewMode === "grid" ? colors.stateColor : colors.backgroundColor
         }
         onClick={() => dispatch(changeMode("grid"))}
       />
@@ -108,7 +108,8 @@ const HeaderStolenBikes: React.FC<HeaderStolenBikesProps> = ({ onSearch }) => {
             color: colors.textColorBase,
           }}
         >
-          All Stolen Bikes 44
+          All Stolen Bikes{" "}
+          <span style={{ color: colors.primaryColor }}>{numberOfStolen}</span>
         </Typography>
       </Box>
     </Box>

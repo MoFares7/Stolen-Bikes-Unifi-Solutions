@@ -1,18 +1,44 @@
-import useTranslationDashboard from "../../../shared/hooks/useTranslationDashboard";
-import { TableColumn } from "../../../shared/components/Table/MainTable";
-import { RowStolenBikesType } from "../types/stolenBikesRowType";
-import { StolenBikeDataType } from "../types/stolenBikeDataType";
-import useStoleBikesApi from "./useStoleBikesApi";
-import { useAppSelector } from "../../../shared/hooks/useSelectors";
 import notFoundImage from "../../../assets/images/notFoundImage.svg";
+import { TableColumn } from "../../../shared/components/Table/MainTable";
+import usePaginationSearch from "../../../shared/hooks/usePaginationSearch";
+import { useAppSelector } from "../../../shared/hooks/useSelectors";
+import useTranslationDashboard from "../../../shared/hooks/useTranslationDashboard";
+import {
+  useGetAllStolenBikesQuery,
+  useGetCountStolenBikesQuery,
+} from "../services/stolenBikes_api";
+import { StolenBikeDataType } from "../types/stolenBikeDataType";
+import { RowStolenBikesType } from "../types/stolenBikesRowType";
 
 const useStolenBikesData = () => {
   const {
-    stolenBikesData,
-    isGetStolenBikesDataError,
-    isGetStolenBikesDataLoading,
-  } = useStoleBikesApi();
+    pageSize,
+    pageNumber,
+    handlePageChange,
+    handlePageSizeChange,
+    handleSearch,
+    searchTerm,
+  } = usePaginationSearch();
   const { translate } = useTranslationDashboard();
+
+  const {
+    data: stolenBikesData,
+    isLoading: isGetStolenBikesDataLoading,
+    isError: isGetStolenBikesDataError,
+  } = useGetAllStolenBikesQuery({
+    page: pageNumber,
+    per_page: pageSize,
+    query: searchTerm,
+  });
+
+  const {
+    data: stolenBikesCount,
+    isLoading: isGetStolenBikesCountLoading,
+    isError: isGetStolenBikesCountError,
+  } = useGetCountStolenBikesQuery({});
+
+  const totalResults = stolenBikesCount?.bikes.length || 0;
+  const pageCount = Math.ceil(totalResults / pageSize);
 
   const viewMode = useAppSelector((state) => state.viewMode.viewMode);
   const ROWS: RowStolenBikesType[] =
@@ -83,6 +109,16 @@ const useStolenBikesData = () => {
     viewMode,
     isGetStolenBikesDataLoading,
     isGetStolenBikesDataError,
+    pageCount,
+    totalResults,
+    pageSize,
+    pageNumber,
+    handlePageChange,
+    handlePageSizeChange,
+    handleSearch,
+    stolenBikesCount,
+    searchTerm,
+    isGetStolenBikesCountLoading,
   };
 };
 

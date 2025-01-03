@@ -8,9 +8,10 @@ import TableRow from "@mui/material/TableRow";
 import TableSortLabel from "@mui/material/TableSortLabel";
 import { styled } from "@mui/material/styles";
 import React, { ReactNode, memo } from "react";
+import colors from "../../../assets/theme/colors";
 import useTableLogic from "../../hooks/useTableLogic";
 import useTranslationDashboard from "../../hooks/useTranslationDashboard";
-import colors from "../../../assets/theme/colors";
+
 declare module "react" {
   function forwardRef<T, P = {}>(
     render: (props: P, ref: React.Ref<T>) => React.ReactNode | null
@@ -51,6 +52,18 @@ const StyledTableRow = styled(TableRow)(() => ({
   },
 }));
 
+const Shimmer = styled(Box)(({ theme }) => ({
+  height: theme.typography.subtitle1.fontSize,
+  width: "100%",
+  background: `linear-gradient(90deg, ${colors.stateColor} 25%, ${colors.stateColor} 50%, ${colors.stateColor} 75%)`,
+  backgroundSize: "200% 100%",
+  animation: "shimmer 1.5s infinite",
+  "@keyframes shimmer": {
+    "0%": { backgroundPosition: "200% 0" },
+    "100%": { backgroundPosition: "-200% 0" },
+  },
+}));
+
 export interface TableColumn<T> {
   key: keyof T;
   label: string;
@@ -66,11 +79,19 @@ interface MainTableProps<T extends { id: string }> {
   options?: { label: string; action: (id: string, row?: T) => void }[];
   isRowClick?: boolean;
   onSort?: (sortKey: string) => void;
+  isLoading?: boolean;
 }
 
 const MainTable = React.forwardRef(
   <T extends { id: string }>(
-    { columns, rows, options, isRowClick = true, onSort }: MainTableProps<T>,
+    {
+      columns,
+      rows,
+      options,
+      isRowClick = true,
+      onSort,
+      isLoading = false,
+    }: MainTableProps<T>,
     ref: React.Ref<HTMLTableElement>
   ) => {
     const { handleRowClick } = useTableLogic(rows);
@@ -111,7 +132,6 @@ const MainTable = React.forwardRef(
                       IconComponent={() => (
                         <>
                           <Box sx={{ px: "2px" }} />
-                          {/* <IconArrowsUpDown stroke={1.8} size={"15px"} /> */}
                         </>
                       )}
                     >
@@ -130,23 +150,33 @@ const MainTable = React.forwardRef(
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <StyledTableRow
-                key={row.id}
-                onClick={() => (isRowClick ? handleRowClick(row.id) : {})}
-              >
-                {columns.map((column) => (
-                  <StyledTableCell
-                    key={column.key as string}
-                    align={column.align || "left"}
+            {isLoading
+              ? Array.from({ length: 5 }).map((_, index) => (
+                  <StyledTableRow key={index}>
+                    {columns.map((column, cellIndex) => (
+                      <StyledTableCell key={cellIndex}>
+                        <Shimmer />
+                      </StyledTableCell>
+                    ))}
+                  </StyledTableRow>
+                ))
+              : rows.map((row) => (
+                  <StyledTableRow
+                    key={row.id}
+                    onClick={() => (isRowClick ? handleRowClick(row.id) : {})}
                   >
-                    {column.format
-                      ? (column.format(row[column.key], row) as ReactNode)
-                      : (row[column.key] as string)}
-                  </StyledTableCell>
+                    {columns.map((column) => (
+                      <StyledTableCell
+                        key={column.key as string}
+                        align={column.align || "left"}
+                      >
+                        {column.format
+                          ? (column.format(row[column.key], row) as ReactNode)
+                          : (row[column.key] as string)}
+                      </StyledTableCell>
+                    ))}
+                  </StyledTableRow>
                 ))}
-              </StyledTableRow>
-            ))}
           </TableBody>
         </Table>
       </TableContainer>
